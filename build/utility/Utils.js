@@ -128,30 +128,42 @@ var __importDefault =
     return mod && mod.__esModule ? mod : { default: mod };
   };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.ResizeController = void 0;
-var fs_1 = __importDefault(require('fs'));
-var ResizeController = /** @class */ (function () {
-  function ResizeController() {}
-  ResizeController.getResizedImage = function (req, res, next) {
+exports.Utils = void 0;
+var sharp_1 = __importDefault(require('sharp'));
+var Utils = /** @class */ (function () {
+  function Utils() {}
+  Utils.resizeFile = function (filePath, thumbnailFilePath, width, height) {
     return __awaiter(this, void 0, void 0, function () {
-      var fileName, thumbNailFilePath;
+      var error_1;
       return __generator(this, function (_a) {
-        fileName = req.query.filename;
-        thumbNailFilePath = __dirname + '\\..\\..\\assets\\thumb\\' + ''.concat(fileName, '_thumb.jpg');
-        try {
-          res.writeHead(200, {
-            'Content-Type': 'image/jpg',
-          });
-          fs_1.default.readFile(thumbNailFilePath, function (err, content) {
-            res.end(content);
-          });
-        } catch (error) {
-          next(error);
+        switch (_a.label) {
+          case 0:
+            console.log('in here resize file');
+            _a.label = 1;
+          case 1:
+            _a.trys.push([1, 3, , 4]);
+            return [
+              4 /*yield*/,
+              (0, sharp_1.default)(filePath)
+                .resize({
+                  width: width,
+                  height: height,
+                })
+                .toFile(thumbnailFilePath),
+            ];
+          case 2:
+            _a.sent();
+            return [3 /*break*/, 4];
+          case 3:
+            error_1 = _a.sent();
+            console.log(error_1);
+            return [3 /*break*/, 4];
+          case 4:
+            return [2 /*return*/];
         }
-        return [2 /*return*/];
       });
     });
   };
-  return ResizeController;
+  return Utils;
 })();
-exports.ResizeController = ResizeController;
+exports.Utils = Utils;

@@ -4,7 +4,6 @@ import { ResizeMiddleware } from '../middlewares/ResizeMiddleware';
 
 const routes = express.Router();
 
-
-routes.get('/images', ResizeMiddleware.resizeImage, ResizeController.getResizedImage ); 
+routes.get('/images', ResizeMiddleware.resizeImage, ResizeController.getResizedImage);
 
 export default routes;
