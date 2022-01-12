@@ -1,7 +1,6 @@
 import supertest from 'supertest';
 import app from '../index';
 import { Utils } from '../utility/Utils';
-import fs from 'fs';
 import path from 'path';
 
 const request = supertest(app);
