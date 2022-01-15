@@ -18,15 +18,13 @@ export class ResizeMiddleware {
     if ((width && !height) || (!width && height))
       return res.status(401).send(`${ERROR_MESSAGE}: When thumbnail is required both width and height are mandatory`);
     try {
-      fs.exists(filePath, (exists: boolean) => {
-        if (!exists) {
-          res.writeHead(404, {
-            'Content-Type': 'text/plain',
-          });
-          res.end('404 Not Found');
-          return;
-        }
-      });
+      if (!fs.existsSync(filePath)) {
+        res.writeHead(404, {
+          'Content-Type': 'text/plain',
+        });
+          res.end('The image does not exist, 404 Not Found');
+        return;
+      }
       if (fs.existsSync(thumbnailFilePath)) {
         res.writeHead(200, {
           'Content-Type': 'image/jpg',

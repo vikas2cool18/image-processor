@@ -62,22 +62,18 @@ var ResizeMiddleware = /** @class */ (function () {
                         thumbnailFilePath = __dirname + '../../../assets/thumb/' + "".concat(fileName, "-").concat(width, "-").concat(height, "_thumb.jpg");
                         if (!fileName)
                             return [2 /*return*/, res.status(401).send("".concat(ERROR_MESSAGE, ": Image name is missing"))];
-                        console.log(width);
                         if ((width && !height) || (!width && height))
                             return [2 /*return*/, res.status(401).send("".concat(ERROR_MESSAGE, ": When thumbnail is required both width and height are mandatory"))];
-                        console.log(width);
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        fs_1.default.exists(filePath, function (exists) {
-                            if (!exists) {
-                                res.writeHead(404, {
-                                    'Content-Type': 'text/plain',
-                                });
-                                res.end('404 Not Found');
-                                return;
-                            }
-                        });
+                        if (!fs_1.default.existsSync(filePath)) {
+                            res.writeHead(404, {
+                                'Content-Type': 'text/plain',
+                            });
+                            res.end('The image does not exist, 404 Not Found');
+                            return [2 /*return*/];
+                        }
                         if (fs_1.default.existsSync(thumbnailFilePath)) {
                             res.writeHead(200, {
                                 'Content-Type': 'image/jpg',
